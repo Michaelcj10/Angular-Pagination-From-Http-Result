@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html data-ng-app="myApp">
+   <head>
+      <link data-require="bootstrap-css@3.1.1" data-semver="3.1.1" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+      <script data-require="angular.js@1.3.0" data-semver="1.3.0" src="https://code.angularjs.org/1.3.0/angular.js"></script>
+      <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+      <script data-require="bootstrap@3.1.1" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="css/style.css" />
+      <script src="js/module.js"></script>        
+      <script src="js/factory.js"></script>
+      <script src="js/script.js"></script>
+      <script src="js/dirPagination.js"></script>
+      <link rel='shortcut icon' type='image/x-icon' href='images/torch.ico' />
+      <title>Olympics 2017</title>
+   </head>
+   <body>
+      <div class="jumbotron olympic-banner">
+         <h1>Dublin Olympics 2017 Records </h1>
+      </div>
+      <div class="row olympic-holder">
+         <div class="col-lg-3"></div>
+         <div class="col-lg-6">
+            <div data-ng-controller="MyController" class="my-controller">
+               <h1>Olympics 2017</h1>
+               <div class="row">
+                      <div class="col-xs-4">
+                     <label for="search">Search:</label>
+                     <input data-ng-model="q" id="search" class="form-control" placeholder="Filter text">
+                  </div>
+                  <div class="col-xs-4">
+                     <label for="search">items per page:</label>
+                     <input type="number" min="1" max="100" class="form-control" data-ng-model="pageSize">
+                  </div>
+               </div>
+               <br>
+               <div class="panel panel-default">
+                  <div class="panel-body">
+                     <table class="table table-responsive ">
+                        <thead>
+                           <tr>
+                              <th>#</th>
+                              <th>Country</th>
+                              <th>Name</th>
+                              <th>Sex</th>
+                              <th>Event</th>
+                              <th>Position</th>
+                              <th>Medal</th>
+                           </tr>
+                        </thead>
+                        <tr data-dir-paginate="record in records | filter:q | itemsPerPage: pageSize" data-current-page="currentPage">
+                           <td>{{$index+1}}</td>
+                           <td> {{record.country}}</td>
+                           <td> {{record.athlete}}</td>
+                           <td> {{record.sex}}</td>
+                           <td> {{record.event}}</td>
+                           <td> {{record.medal}}</td>
+                           <td> <img data-ng-src="images/{{record.medal}}.png" src="#" alt="medal image"></td>
+                        </tr>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="text-center">
+               <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="directives/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>
